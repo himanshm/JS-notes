@@ -586,3 +586,139 @@ async function runAsync() {
   await Promise.reject();
 }
 ```
+### Module
+A module is just a file. One Script is one module.
+Using modules, created values aren't put on the global object. In fact, modules are automatically put on in 'strict mode'.
+
+The reason console.log(this) gives undefined in a JavaScript module but not in a regular (non-module) script comes down to how this behaves in different execution contexts.
+
+🧾 In short:
+Environment	        ->              `this` in top-level
+Script (non-module)	    ->          `window` (in browser)
+Module (`type="module"`)	  ->        `undefined` (in strict mode)
+
+📌 Why `this` is `undefined` in a module:
+Modules are always in strict mode:
+
+Top-level `this` is `undefined` in strict mode.
+
+Even if you don’t write "use strict", ES modules behave as if you did.
+
+In regular scripts, top-level `this` refers to the global object (`window` in browsers, `global` in Node).
+
+✅ Examples
+📦 Module (e.g. `<script type="module">`)
+```
+console.log(this); // undefined
+```
+📄 Regular script (e.g. `<script>`)
+```
+console.log(this); // window (in browser)
+```
+🧠 Takeaway:
+If you're writing ES modules, avoid relying on this at the top level.
+
+Use `globalThis` instead if you need the global object (works in all environments):
+```
+console.log(globalThis); // works in both modules and non-modules
+```
+### `this` keyword
+`this` is a reference to an object.
+It's value is implicitly set according to how a function is called. e.g. as an arrow function or a function declaration, as a normal function
+or as a method, as a function constructor or as a class or within a callback function
+
+One key reason why `this` in JavaScript is dynamic (i.e., determined by how a function is called) is to ensure that when methods are accessed via the prototype chain, they still operate with the correct `this` context.
+
+This dynamic behavior is essential for prototypal inheritance. It allows both constructor functions and classes to behave correctly, maintaining the right `this` value when an object inherits methods from its prototype.
+
+```
+function Animal(name) {
+  this.name = name;
+}
+Animal.prototype.speak = function () {
+  console.log(`${this.name} makes a sound`);
+};
+
+const dog = new Animal('Buddy');
+dog.speak(); // "Buddy makes a sound"
+
+// Even though speak is defined on Animal.prototype, calling it on dog correctly sets this to dog.
+
+// This is possible because this is resolved at call time, not at definition time.
+
+```
+4 Rules to 'this'. How is it called?
+
+1) in the global context (global object, undefined in strict mode)
+2) as a method on an object (object on left side of dot when the method's called)
+3) as a constructor function or class constructor (the instance itself with new)
+4) as a DOM event handler (the element itself)
+
+1 -> if you're with javaScript on the client, `this` is going to be the window object. However, functions have their own context as well
+for function declarations, `this` still refers to the global object -> the window in normal mode
+Why is this an improvement for `this` to be `undefined` when working with functions instead of the global object window?
+if `this` refers to the global object that is window, its very easy to add values on to it by directly mutating the object. We never want data
+that's scoped to a function to be able to leak out into the outer scope. That contradicts the purpose of having data scoped to a function
+all together.
+
+2 -> as a method on an object, the method uses `this` to refer to the properties of the object. For any method `this` refers to the object
+that its on.
+
+3 -> `new` keyword creates an instance of a class or a constructor function. When a class is instantiated with `new`, the `this` keyword is
+bound to that instance.
+
+4 -> In an event handler called by `addEventListener()` `this` is going to refer to `event.target`
+
+Whatever is passed to `call()` or `apply()` is what the `this` context is going to be set to for a given function.
+```
+function whatIsThis() {
+  console.log(this);
+}
+
+console.log(whatIsThis.apply({ first: "Reed" })); // { first: "Reed" }
+```
+`call()` takes separate arguments whereas `apply()` takes any further arguments as an array.
+
+In JavaScript, `call`, `apply`, and `bind` are methods available on functions. They let you explicitly set the value of `this` when invoking or preparing to invoke a function.
+
+#### `call`
+Invokes the function immediately, allowing you to pass `this` and arguments one by one.
+```
+function greet(greeting: string) {
+  console.log(`${greeting}, ${this.name}`);
+}
+
+const person = { name: 'Alice' };
+greet.call(person, 'Hello'); // Hello, Alice
+```
+#### `apply`
+Also invokes the function immediately, but you pass arguments as an array.
+```
+greet.apply(person, ['Hi']); // Hi, Alice
+```
+
+sometimes we might need to use a method over and over with the `this` context of another object and in that case we need to use
+another function named `bind()`
+
+#### `bind`
+Does not invoke the function immediately. It returns a new function with `this` permanently bound.
+
+what `bind` does is it gives us a brand new function with an explicitly bound `this. So this always going to be bound to the context that
+is provided to it.
+```
+const greetAlice = greet.bind(person);
+greetAlice('Hey'); // Hey, Alice
+```
+Arrow functions don't have their own `this` binding. Instead, they go up the next execution context.
+
+### State and Reducer
+State is simply the data that has to be managed in our application. State is important because it tell us the status of the application.
+
+A Reducer is a function that takes two arguments -> state and action and return -> based on both of these arguments -> a new state
+`const reducer = (state, action) => newState`
+
+Reducers are special because they're predictable. In fact, they're what's known as pure functions. Pure function is a concept from
+functional programming which means that given a certain input to the function, the function's always going to give us the same output.
+
+Imperative code -> code for computer
+Declarative code -> code for computer
