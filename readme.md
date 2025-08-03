@@ -742,10 +742,15 @@ But why type...?
 03 Automate repetitive tasks
 
 root directory of the project currently open -> print working directory command -> `~ pwd`
+
 what the current directory contains -> list of the files and directories -> `~ ls` 
+
 navigate to the inner directory -> change directory -> `~ cd <directory_name>`
+
 clear the terminal -> clearance of visual clutter (no actions are actually stopped) -> `~ clear`
+
 go up one directory level -> `~ ../`
+
 Suppose you're in:
 ```bash
 /home/himanshu/projects/finance/
@@ -772,23 +777,41 @@ cd ../other-project/
 This will go up one level, then into `other-project`.
 
 #### Create and delete files
-Create -> `~ touch`
-`~ touch mountains.txt`
-Delete -> `~ rm`
-`~ rm mountains.txt`
 
+Create -> `~ touch`
+
+```bash
+~ touch mountains.txt
+```
+
+Delete -> `~ rm`
+
+```bash
+~ rm mountains.txt
+```
 Default to current working directory
 Use navigation rules / paths to create & delete elsewhere
 
 #### Create and delete directories
+
 Create -> `~ mkdir`
-`~ mkdir cities`
+
+```bash
+~ mkdir cities
+```
+
 Delete -> `~ rmdir`
-`~ rmdir cities` for empty directory
+
+```bash
+~ rmdir cities
+```
+for empty directory
+
 if direcory is not empty
 `~ rm -r cities`
 
 `~ rm -rf`
+
 ```bash
 rm -rf foldername/
 ```
@@ -802,7 +825,18 @@ rm -rf foldername/
 
 #### Write and read
 Write -> `~ echo`
-`~ echo 'Hello, world!'
-Write to a file -> `~ echo <content> > filename.ext`
-`~ echo 'Hello, world!' > hello.txt` Write 'Hello, world~' in hello.txt
+
+```bash
+~ echo 'Hello, world!'
+```
+
+Write to a file -> 
+```bash
+~ echo <content> > filename.ext
+```
+```bash
+`~ echo 'Hello, world!' > hello.txt
+```
+Write 'Hello, world' in hello.txt
+
 Creates the file, if `hello.txt` does not already exits
