@@ -730,7 +730,7 @@ null -> how you as a developer signalize emptiness
 undefined -> how JavaScript signalizes emptiness
 
 # Tools of the Trade
-## Command Line Basics 1
+## Command Line Basics
 #### what is the command line?
 A user interface - also called "command line interface" or CLI - that allows us to utilise the functions of our operating system.
 Works by means of typing commands instead of by clicking icons as we do in a GUI.
@@ -744,6 +744,10 @@ But why type...?
 root directory of the project currently open -> print working directory command -> `~ pwd`
 
 what the current directory contains -> list of the files and directories -> `~ ls` 
+
+`~ ls -l`
+
+l - long format
 
 navigate to the inner directory -> change directory -> `~ cd <directory_name>`
 
@@ -835,8 +839,367 @@ Write to a file ->
 ~ echo <content> > filename.ext
 ```
 ```bash
-`~ echo 'Hello, world!' > hello.txt
+~ echo 'Hello, world!' > hello.txt
 ```
 Write 'Hello, world' in hello.txt
 
 Creates the file, if `hello.txt` does not already exits
+
+Overwrite or append
+
+The redirection operator `>` overwrites all existing content.
+
+append redirection operator `>> appends to the existing content.
+
+Read -> `~ cat`
+
+```bash
+~ cat hello.txt
+```
+The redirection and append operator work similar to write
+
+#### Terminology
+What is Linux ->
+
+An operating system (just like windows and macOS) which is open source and highly customisable. It is very commonly used
+for servers and supercomputers and it is commonly operated through the command line.
+
+What is a shell ->
+
+A programme that lets us interact with the operating system, e.g. Linux. It interprets all the command typed in CLI. There are
+several different shells, e.g. Bash, zsh, etc.
+
+What is a command line interface ->
+
+It is a concept of interacting with the OS through typing commands.
+
+A CLI can be displayed in a dedicated stand-alone app, e.g. Terminal (MacOS), VS Code, etc.
+
+Same app and same CLI can run several different shells
+
+Why is this important? ->
+
+Because it helps us understand what is actually being done in the computer
+
+How is this all connected?
+
+Terminal App -> CLI -> Shell -> OS
+
+No matter what device we're on, and no matter what we do on that device, we can be absolutely sure that it has an operating system (OS)
+and that this OS is in charge of communication between the Hardware and Software. To control this system, we can use a Shell, since a
+shell is a program that can communicate with the OS. To control the shell itself, we use a CLI. Here, we type our commands to give
+instructions to the shell that the shell can then pass on to the OS and lastly to access a CLI so that we can type all the commands we
+need some kind of app (Terminal) that supports this type of interface.
+
+Why mix in Linux?
+
+Because Linux is a widely used OS for coding, and knowing how to control the OS through a shell and a CLI is a must when working in Linux
+
+What are options?
+
+Options are a way for us to add additional functionality to a command
+
+```bash
+rm -r [dir_name]
+```
+`-r` - recursive
+Delete a directory that is not empty
+
+```zsh
+ls -l
+```
+`-l` - long format
+
+Option syntax
+
+Single dash/hyphen for short options `-`
+
+Two dashes for long options `--`
+
+```zsh
+rm -r [dir_name]
+rm --recursive [dir_name]
+```
+
+#### Find files and directories
+Find Basics ->
+
+Syntax
+
+```zsh
+find [path] [option] [expression]
+```
+e.g.
+```zsh
+find . -name 'forest*'
+```
+-> we want to look something
+(anything that is called something with forest `'forest*'`)
+by its name `-name` in the current working directory `.`
+
+What it does:
+`find`: A command to search for files and directories.
+
+`.`: The current directory (i.e., search starting here and recursively).
+
+`-name 'forest*'`: Match files/directories whose name starts with forest.
+
+🧩 What is `*`?
+`*` is a wildcard called a glob (short for "global").
+
+It matches zero or more characters.
+
+So `'forest*'` matches:
+
+`forest`
+
+`forest.txt`
+
+`forest123.log`
+
+`forestation`
+
+etc.
+
+`.` -> Current working directory
+
+`..` -> Parent working directory
+
+`~` -> Home directory
+
+```zsh
+/home/sai-himanshu
+```
+
+`/` -> Root Directory -> Contains `/home` or `/Users`  in MacOS
+
+`-iname` -> Case insensitive search by name
+
+`-type f` -> search by type (file)
+
+`-type d` -> search by type (directory)
+
+Combine options
+
+```zsh
+-type d -name 'forest*'
+```
+This command finds directories only (not files) whose names start with `forest`, starting from the current directory (`.`).
+
+user directories are under `/home` in linux and under `/Users` in MacOS
+
+Path -> The path defines where the search starts. All child elements are included in the search.
+
+Relative file paths `../forests`
+
+Absolute file paths: `/home/sai-himanshu/dev/scrimba-cli-course/geography_game`
+
+use `CTRL + c` to kill a process
+
+#### Rename, Move and Copy
+
+Rename ->
+
+`mv [old_name] [new_name]`
+
+Move ->
+
+`mv [name] [new_location]`
+
+`name` -> name of the item that we want to move
+
+`new_location` -> the location we want it to move it to
+
+```zsh
+mv capitals.txt geography_game/cities
+```
+
+Note -> if the new location does not yet exist, 'mv' will rename the item instead of moving it
+
+Copy ->
+
+cp [original_name] [copy_name]
+
+use `-r` option to copy directories
+
+e.g -> copy file
+```zsh
+cp team.txt team_backup.txt
+```
+
+copy directory
+
+```zsh
+cp -r cities cities_backup
+```
+
+`-r` recursive copying, using the `-r` option means that every item at any level inside the directory is copied individually
+
+#### Search in files
+
+```zsh
+grep [pattern] [file(s)]
+```
+grep - global search for a regular expression print matching lines
+
+`grep` gives us all instances of the pattern you're looking for
+
+Search Options
+`-n` will give us the line number of every instance found of the pattern
+
+```
+grep -n ',' team*
+
+Useful options
+`-n` show line numbers
+`-i` Case insensitive
+`r` search recursively
+
+```zsh
+grep -r [pattern] [directory]
+```
+When we search recursively, we set directory instead one or more files as the location
+
+#### Replacing content in files
+
+Syntax
+```zsh
+sed 's/pattern/replacement/' [filename]
+```
+
+example:
+```zsh
+sed 's/,/:/' team*
+```
+✅ What it does:
+This command uses `sed` (stream editor) to:
+
+Replace the first comma (`,`) with a colon (`:`) in each line of files that match `team*`.
+
+📝 Example:
+Before (team1.txt):
+
+```
+alice,developer
+bob,designer
+```
+Command:
+
+```zsh
+sed 's/,/:/' team1.txt
+```
+Output:
+```
+alice:developer
+bob:designer
+```
+
+⚠️ Only the first comma per line is replaced. If you want to replace all commas, use the `g` flag:
+
+```zsh
+sed 's/,/:/g' team*
+```
+
+Default behviour
+Only the first instance of the search pattern in each line is replaced.
+
+The file itself is not modified. Only the printed output contains the replacement.
+
+Replacement options
+Syntax:
+`sed 's/pattern/replacement/[option(s)]' [file]`
+
+`-I` - case insensitive
+
+`-g` - global
+
+The order doesn't matter: `-gI` / `-Ig`
+
+Replacement output
+-> Redirect output
+
+```zsh
+sed 's/,/:/' team* > colon-team.txt
+```
+-> Modify file (depends on the shell)
+
+```bash
+sed -i 's/.../.../[option(s)]' [file]
+```
+
+```zsh
+sed -i '' 's/.../.../[option(s)]' [file]
+
+```
+
+#### Count values in files
+
+Syntax (`wc` word count)
+
+```zsh
+wc [file]
+```
+
+example
+
+```zsh
+wc team.txt
+```
+5(lines) 17(words) 112(bytes)
+
+Count options
+
+`wc -l` -> Number of lines
+
+`wc -w` -> number of words
+
+`wc -c` -> number of bytes
+
+`wc -m` -> number of characters
+
+Bytes and characters often have the same value in plain english text because 1 UTF-8 character = 1 byte
+
+#### Sorting files
+
+Syntax
+```zsh
+sort [file]
+```
+
+Sort options
+
+```zsh
+sort [option] [filename]
+```
+
+Useful options
+
+`-r` (Z-A) reverse
+
+`-n` -> Numeric
+
+Note -> By default, 'sort' treats everything as strings. Without the `-n` option, '11' comes before '2'.
+
+
+Remove duplicates
+
+```zsh
+uniq [filename]
+```
+
+Any adjacent duplicates are removed.
+
+To remove all the duplicates - not just the adjacent ones - you have to first sort the file contents alphabetically.
+
+To combine two commands together, use the The Pipe character `|`
+
+```zsh
+[cmd1] | [cmd2]
+
+```zsh
+sort team.txt | uniq
+```
+
+Default Behaviour
+
+Only the printed output is modified. The file itself stays unchanged.
