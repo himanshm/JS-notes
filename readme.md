@@ -722,3 +722,87 @@ functional programming which means that given a certain input to the function, t
 
 Imperative code -> code for computer
 Declarative code -> code for computer
+
+DOM Manipulation comes with a cost.
+In template literals -> scape out of the string and shove the JS string into the string using ${}
+
+null -> how you as a developer signalize emptiness
+undefined -> how JavaScript signalizes emptiness
+
+# Tools of the Trade
+## Command Line Basics 1
+#### what is the command line?
+A user interface - also called "command line interface" or CLI - that allows us to utilise the functions of our operating system.
+Works by means of typing commands instead of by clicking icons as we do in a GUI.
+
+But why type...?
+... when we could just keep clicking those icons?
+01 File Management
+02 Control Development Environment
+03 Automate repetitive tasks
+
+root directory of the project currently open -> print working directory command -> `~ pwd`
+what the current directory contains -> list of the files and directories -> `~ ls` 
+navigate to the inner directory -> change directory -> `~ cd <directory_name>`
+clear the terminal -> clearance of visual clutter (no actions are actually stopped) -> `~ clear`
+go up one directory level -> `~ ../`
+Suppose you're in:
+```bash
+/home/himanshu/projects/finance/
+```
+Running:
+
+```bash
+cd ../
+```
+will move you to:
+```bash
+/home/himanshu/projects/
+```
+To go up two levels:
+
+```bash
+cd ../../
+```
+You can also combine with directory names:
+
+```bash
+cd ../other-project/
+```
+This will go up one level, then into `other-project`.
+
+#### Create and delete files
+Create -> `~ touch`
+`~ touch mountains.txt`
+Delete -> `~ rm`
+`~ rm mountains.txt`
+
+Default to current working directory
+Use navigation rules / paths to create & delete elsewhere
+
+#### Create and delete directories
+Create -> `~ mkdir`
+`~ mkdir cities`
+Delete -> `~ rmdir`
+`~ rmdir cities` for empty directory
+if direcory is not empty
+`~ rm -r cities`
+
+`~ rm -rf`
+```bash
+rm -rf foldername/
+```
+-r (recursive): delete directories and their contents recursively.
+
+-f (force): do not prompt for confirmation, even if:
+-> Files are write-protected
+-> SThe file/directory doesn’t exist
+
+➡️ This is dangerous if misused, especially in root or important system directories.
+
+#### Write and read
+Write -> `~ echo`
+`~ echo 'Hello, world!'
+Write to a file -> `~ echo <content> > filename.ext`
+`~ echo 'Hello, world!' > hello.txt` Write 'Hello, world~' in hello.txt
+Creates the file, if `hello.txt` does not already exits
