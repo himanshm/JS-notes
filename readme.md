@@ -1195,6 +1195,7 @@ To combine two commands together, use the The Pipe character `|`
 
 ```zsh
 [cmd1] | [cmd2]
+```
 
 ```zsh
 sort team.txt | uniq
